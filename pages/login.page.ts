@@ -11,8 +11,8 @@ export class LoginPage {
     this.page = page;
     this.userTextBox = page.getByRole('textbox', { name: 'Username' });
     this.passTextBox = page.getByRole('textbox', { name: 'Password' });
-    this.loginButton = page.locator("xpath=//input[@type='submit']");
-    this.errorMessage = page.locator("xpath=//div[contains(@class,'error-message-container')]");
+    this.loginButton = page.getByRole('button', { name: 'Login'});
+    this.errorMessage = page.locator('[data-test="error"]');
   }
 
   async goto() {
