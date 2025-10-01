@@ -35,7 +35,7 @@ export default defineConfig({
     trace: 'on-first-retry',
     video: 'on-first-retry',
     screenshot: 'only-on-failure',
-    viewport: { width: 1366, height: 768 }
+    viewport: { width: 1366, height: 768 },
   },
 
   /* Configure projects for major browsers */
