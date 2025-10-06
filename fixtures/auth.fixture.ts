@@ -26,7 +26,7 @@ export const test = base.extend<Fixtures>({
     
     if (userRole === 'locked_out_user') {
       throw new Error(
-        'inventory fixture no aplica para locked_out_user. Usa LoginPage en el test negativo.',
+        'You can not used this ficture for negative cases',
       );
     }
 

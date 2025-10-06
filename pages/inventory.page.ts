@@ -12,7 +12,7 @@ export class InventoryPage {
     this.titleText = page.locator('.title');
     this.sortSelect = page.locator('[data-test="product-sort-container"]');
     this.addToCartButtons = page.getByRole('button', { name: 'Add to cart'});
-    this.productDetails = page.locator('.inventory_item_name]');
+    this.productDetails = page.locator('.inventory_item_name');
   }
 
   async assertLoaded() {
@@ -40,4 +40,17 @@ export class InventoryPage {
       await this.addToCartButtons.nth(i).click();
     }
   }
+
+  get productNames() { return this.page.locator('.inventory_item_name'); }
+  get productPrices() { return this.page.locator('.inventory_item_price'); }
+
+  async getNames(): Promise<string[]> {
+    return await this.productNames.allTextContents();
+  }
+
+  async getPrices(): Promise<number[]> {
+    const raw = await this.productPrices.allTextContents(); // ["$29.99", "$9.99", ...]
+    return raw.map(t => Number(t.replace('$','')));
+  }
+
 }
