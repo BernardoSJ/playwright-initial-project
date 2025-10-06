@@ -19,14 +19,6 @@ export class CartPage {
     await expect(this.page.locator('.title')).toHaveText('Your Cart');
   }
 
-  get cartItems() {
-    return this.page.locator('.inventory_item');
-  }
-
-  async assertItemsCount(n: number) {
-    await expect(this.cartItems).toHaveCount(n);
-  }
-
   async assertNumberOfProducts(n: number) {
     if (n === 0) {
       await expect(this.cartBadge).toHaveCount(0);
@@ -54,4 +46,11 @@ export class CartPage {
       this.page.locator('[data-test="checkout"]').click(),
     ]);
   }
+
+  get productNames() { return this.page.locator('.inventory_item_name'); }
+
+  async getProductsNames(): Promise<string[]> {
+    return await this.productNames.allTextContents();
+  }
+
 }

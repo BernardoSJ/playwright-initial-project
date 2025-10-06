@@ -12,7 +12,7 @@
     "test": "playwright test",
     "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui",
-    "report": "playwright show-report reports/html",
+    "report": "playwright show-report",
     "format": "prettier --write .",
     "test:report": "playwright test --reporter=html",
     "format:check": "prettier --check ."

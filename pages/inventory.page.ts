@@ -35,13 +35,16 @@ export class InventoryPage {
     await this.sortSelect.selectOption(valueMap[option]);
   }
 
-  async addProducts(n: number) {
+  async addProducts(n: number): Promise<string[]> {
+    let productsName:string[] = []
     for (let i = 0; i < n; i++) {
       await this.addToCartButtons.nth(i).click();
+      productsName.push(await this.addToCartButtons.nth(i).locator('xpath=../../div[@class="inventory_item_name"]').innerText());
     }
+    return productsName;
   }
 
-  get productNames() { return this.page.locator('.inventory_item_name'); }
+  get productNames() { return this.productDetails; }
   get productPrices() { return this.page.locator('.inventory_item_price'); }
 
   async getNames(): Promise<string[]> {
