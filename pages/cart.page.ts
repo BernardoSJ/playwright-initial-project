@@ -28,7 +28,7 @@ export class CartPage {
   }
 
   async removeProductByName(name: string) {
-    const row = this.page.locator('.inventory_item').filter({ hasText: name });
+    const row = this.page.locator('.cart_item').filter({ hasText: name });
     await expect(row).toBeVisible();
     await row.getByRole('button', { name: 'Remove' }).click();
   }

@@ -36,12 +36,31 @@ export class InventoryPage {
   }
 
   async addProducts(n: number): Promise<string[]> {
-    let productsName:string[] = []
-    for (let i = 0; i < n; i++) {
-      await this.addToCartButtons.nth(i).click();
-      productsName.push(await this.addToCartButtons.nth(i).locator('xpath=../../div[@class="inventory_item_name"]').innerText());
+    const productsName:string[] = [];
+
+    const items = this.page.locator('.inventory_item');
+    const count = Math.min(n, await items.count());
+
+    for (let i = 0; i < count; i++) {
+      const currentItem = items.nth(i);
+      const currentName = (await currentItem.locator('.inventory_item_name').innerText());
+
+      await currentItem.locator('[data-test^="add-to-cart"]').click();
+      productsName.push(currentName);
+
     }
     return productsName;
+  }
+
+  async addProductsWithoutList(n: number){
+    const items = this.page.locator('.inventory_item');
+    const count = Math.min(n, await items.count());
+
+    for (let i = 0; i < count; i++) {
+      const currentItem = items.nth(i);
+      await currentItem.locator('[data-test^="add-to-cart"]').click();
+
+    }
   }
 
   get productNames() { return this.productDetails; }
