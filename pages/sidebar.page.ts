@@ -15,7 +15,7 @@ export class SidebarPage {
     }
 
     async openMenuIfNeeded() {
-        if (await this.logoutButton.count()) return;
+        if (!(await this.logoutButton.isVisible())) return;
         await this.burgerButton.click();
         await expect(this.logoutButton).toBeVisible();  
         await expect(this.closeMenuButton).toBeVisible();

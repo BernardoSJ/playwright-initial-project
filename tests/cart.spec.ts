@@ -3,7 +3,7 @@ import { CartPage } from '@pages/cart.page';
 
 test.use({ userRole: 'standard_user'});
 
-test.describe('Cart Module', () => {
+test.describe('@cart Cart Module', () => {
 
     test('Add 2 Products and Verify Products Are Added', async ({inventory}) => {
         const cartPage = new CartPage(inventory.page);
@@ -22,7 +22,7 @@ test.describe('Cart Module', () => {
         
         await cartPage.assertNumberOfProducts(1);
         await cartPage.goToCart();
-        console.log(products[0]);
+
         await cartPage.removeProductByName(products[0]);
 
         await expect(cartPage.cartBadge).toBeHidden();

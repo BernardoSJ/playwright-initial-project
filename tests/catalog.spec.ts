@@ -2,7 +2,7 @@ import { test, expect } from '@fixtures/auth.fixture';
 
 test.use({ userRole: 'standard_user'});
 
-test.describe('Catalog Module', () => {
+test.describe('@catalog Catalog Module', () => {
 
     const sortOptions = ['az','za','lohi','hilo'] as const;
 

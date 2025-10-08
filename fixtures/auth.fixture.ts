@@ -26,7 +26,7 @@ export const test = base.extend<Fixtures>({
     
     if (userRole === 'locked_out_user') {
       throw new Error(
-        'You can not used this ficture for negative cases',
+        'You can not used this fixture for negative cases',
       );
     }
 
