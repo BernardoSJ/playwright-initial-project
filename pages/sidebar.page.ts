@@ -24,8 +24,8 @@ export class SidebarPage {
     async logout() {
         await this.openMenuIfNeeded();
         await Promise.all([
-            this.page.waitForURL(/\/$/),
             this.logoutButton.click(),
+            this.page.waitForURL(/\/$/),
         ]);
     }
 

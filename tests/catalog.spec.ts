@@ -22,6 +22,7 @@ test.describe('@catalog Catalog Module', () => {
             if (option === 'hilo') expected.reverse();
                 expect(prices).toEqual(expected);
             }
+            await expect(inventory.page).toHaveURL(/inventory\.html$/)
         });
     }
 

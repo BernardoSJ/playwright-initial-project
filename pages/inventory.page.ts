@@ -23,8 +23,7 @@ export class InventoryPage {
     const inventoryUrl = '/inventory.html';
     for (let i = 0; i < n; i++) {
       await this.productDetails.nth(i).click();
-      let currentUrl = await this.page.url();
-      await expect(currentUrl).not.toBe(new RegExp(`${inventoryUrl}$`));
+      await expect(this.page).not.toHaveURL(/inventory\.html$/)
       await this.page.goBack();
       await expect(this.page).toHaveURL(new RegExp(`${inventoryUrl}$`));
     }
