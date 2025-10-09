@@ -1,74 +1,103 @@
-# Playwright Initial Project
+# 🎭 Playwright Initial Project
 
-This repository is my first practice project using **Playwright** as an automation tool.  
-It focuses on automating tests for the demo application: [SauceDemo](https://www.saucedemo.com/).
+This repository contains my first complete automation framework using **Playwright**.  
+It automates functional tests for the demo web application [SauceDemo](https://www.saucedemo.com/), following a **Page Object Model (POM)** architecture.
 
-## 🚀 Running the Project
+---
 
-To run the tests locally:
+## 🚀 How to Run the Project
 
-1. Clone or download this repository.
-2. Open a terminal in the project folder.
-3. Install dependencies (only the first time):
+Run the following commands in your terminal:
+
+1. **Clone or download the repository:**
    ```bash
+   git clone https://github.com/BernardoSJ/playwright-initial-project.git
+   ```
+2. **Navigate to the project folder and install dependencies (only the first time):**
+   ```bash
+   cd playwright-initial-project
    npm install
    ```
-4. Run tests in headed mode (browser visible):
+3. **Run tests in headed mode (browser visible):**
    ```bash
    npm run test:headed
    ```
-5. Run tests in headless mode (with HTML report generation):
+4. **Run tests in headless mode with report generation:**
    ```bash
    npm run test:report
    ```
-6. Open the last generated reports:
+5. **Execute specific test suites by tag (e.g., @cart, @catalog, @logout):**
    ```bash
-   npm run test:report
+   npx playwright test --grep @cart
    ```
-
-## 📊 Test Reports
-
-The project generates HTML reports with Playwright’s built-in reporter.
-   
-Reports are available under:
+6. **Open the most recent test report (after running all tests):**
    ```bash
-   /reports/html
+   npm run report:full
    ```
-
-To view them:
+7. **Open the report for the last single test module run:**
    ```bash
    npm run report
    ```
 
-## ✅ Test Coverage
+## 📊 Test Reports
 
-Currently automated modules:
+Playwright automatically generates an **HTML report** for every test run.
+   
+Reports are stored under:
+   ```bash
+   /reports/html
+   ```
+
+To view the latest report:
+   ```bash
+   npm run report:full
+
+   ```
+
+## ✅ Current Test Coverage
+
+**Implemented modules:**
 * **Login**
-
-Planned next modules:
 * **Inventory**
 * **Cart**
-* **Checkout**
 * **Logout**
 
-## 📂 Project Structure
+**In progress / Planned:**
+* **Checkout**
+* **Full E2E flow** (Login → Add Products → Checkout → Logout)
+
+## 🧩 Project Structure
 
 ```text
 playwright-initial-project/
   ├── pages/         # Page Object Models for reusability
   ├── tests/           # End-to-end test specifications
-  ├── fixtures/          # (To be added) custom fixtures
-  ├── mocks/             # (To be added) network mocks
+  ├── fixtures/          # custom fixtures
+  ├── mocks/             # (Planned) network mocks
   ├── playwright.config.ts  # Playwright configuration file
   ├── package.json       # Dependencies and npm scripts
   └── tsconfig.json      # TypeScript configuration
 ```
 
+## 🧠 Key Concepts Applied
+
+* Modular Page Object Model (POM) design.
+* Parameterized fixtures for reusable test contexts.
+* Selective test execution using tags (@login, @cart, @catalog).
+* Promise handling and waitForURL() for reliable navigation.
+* Dynamic locators and use of filter({ has: ... }) for stable element selection.
+* Prettier formatting and npm scripts for consistency.
+
 ## 📌 Future Improvements
 
-This project is always evolving. Upcoming updates include:
-* Add more Page Object Models for the different Modules mentioned above.
-* Expand test coverage: More system modules will be tested.
-* Include CI/CD integration with Github Actions.
-* Add Fixtures and Mocks to get better test management.
-* Improve reporting (videos, traces)
+Planned enhancements include:
+* Expand test coverage to **Checkout** and **E2E workflows**
+* Integrate **CI/CD pipelines** with GitHub Actions.
+* Add **network mocks** and **data fixtures** for isolated test scenarios.
+* Enhance *reporting* with videos, traces, and test artifacts.
+
+## 🧑‍💻 Author
+
+Bernardo Salinas Jáquez
+Quality Assurance Engineer | Test Automation | Playwright | JavaScript | TypeScript
+📍 Practice project for strengthening E2E automation skills with Playwright.
