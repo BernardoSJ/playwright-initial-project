@@ -16,7 +16,7 @@ export class CheckoutPage {
         this.zipCodeTextBox = page.locator('#postal-code');
         this.continueButton = page.locator('#continue');
         this.finishButton = page.locator('#finish');
-        this.completeHeaderLabel = page.locator('[data-test="complete-text"]');
+        this.completeHeaderLabel = page.locator('[data-test="complete-header"]');
     }
 
     async fillCheckoutDetails(firstName: string, lastName: string, zipCode: string){
