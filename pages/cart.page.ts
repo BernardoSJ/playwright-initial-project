@@ -43,8 +43,8 @@ export class CartPage {
 
   async proceedToCheckout() {
     await Promise.all([
-      this.page.waitForURL(/checkout-step-one\.html$/),
       this.page.locator('[data-test="checkout"]').click(),
+      this.page.waitForURL(/checkout-step-one\.html$/),
     ]);
   }
 
