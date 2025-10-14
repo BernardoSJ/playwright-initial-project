@@ -8,3 +8,5 @@ export function buildCustomer() {
         zip: faker.location.zipCode()
     };
 }
+
+export const customerDataSet = Array.from({ length: 5 }, () => buildCustomer());
