@@ -15,9 +15,10 @@
     "paths": {
       "@pages/*": ["pages/*"],
       "@fixtures/*": ["fixtures/*"],
+      "@utils/*": ["utils/*"]
       //"@mocks/*": ["mocks/*"]
     }
   },
-  "include": ["tests", "pages", "fixtures", "mocks", "playwright.config.ts"],
+  "include": ["tests", "pages", "fixtures", "mocks", "playwright.config.ts", "utils/dataBuilder.ts"],
   "exclude": ["node_modules"]
 }
