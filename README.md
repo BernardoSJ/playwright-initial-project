@@ -53,7 +53,10 @@ To view the latest report:
    npm run report:full
 
    ```
-
+When tests fail after a retry, Playwright also generates:
+* ```texttrace.zip``` → full trace viewer
+* ```textvideo.webmv``` → video of the failing test
+(both under ```text/texttest-results```)
 ## ✅ Current Test Coverage
 
 **Implemented modules:**
@@ -61,22 +64,21 @@ To view the latest report:
 * **Inventory**
 * **Cart**
 * **Logout**
+* **Checkout (data-driven)**
 
-**In progress / Planned:**
-* **Checkout**
-* **Full E2E flow** (Login → Add Products → Checkout → Logout)
 
 ## 🧩 Project Structure
 
 ```text
 playwright-initial-project/
-  ├── pages/         # Page Object Models for reusability
-  ├── tests/           # End-to-end test specifications
-  ├── fixtures/          # custom fixtures
-  ├── mocks/             # (Planned) network mocks
+  ├── pages/                # Page Object Models for reusability
+  ├── tests/                # End-to-end test specifications
+  ├── fixtures/             # custom fixtures
+  ├── mocks/                # (Planned) network mocks
+  ├── utils/                # Data builder and helpers
   ├── playwright.config.ts  # Playwright configuration file
-  ├── package.json       # Dependencies and npm scripts
-  └── tsconfig.json      # TypeScript configuration
+  ├── package.json          # Dependencies and npm scripts
+  └── tsconfig.json         # TypeScript configuration
 ```
 
 ## 🧠 Key Concepts Applied
@@ -87,17 +89,19 @@ playwright-initial-project/
 * Promise handling and waitForURL() for reliable navigation.
 * Dynamic locators and use of filter({ has: ... }) for stable element selection.
 * Prettier formatting and npm scripts for consistency.
+* Enable trace and video recording for debugging purposes.
+* Data driven using Faker.js
+* Zero manual waits applying ```text expect()``` for robust validations, assertions and automatic synchronization.
 
 ## 📌 Future Improvements
 
 Planned enhancements include:
-* Expand test coverage to **Checkout** and **E2E workflows**
 * Integrate **CI/CD pipelines** with GitHub Actions.
 * Add **network mocks** and **data fixtures** for isolated test scenarios.
-* Enhance *reporting* with videos, traces, and test artifacts.
+* Enhance reports by attaching trace/video artifacts directly in the CI pipeline.
 
 ## 🧑‍💻 Author
 
-Bernardo Salinas Jáquez
-Quality Assurance Engineer | Test Automation | Playwright | JavaScript | TypeScript
+**Bernardo Salinas Jáquez**
+Quality Assurance Engineer | Test Automation | Playwright | JavaScript | TypeScript<br>
 📍 Practice project for strengthening E2E automation skills with Playwright.
