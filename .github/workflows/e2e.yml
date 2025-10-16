@@ -25,9 +25,14 @@ jobs:
       - name: Install deps
         run: npm ci
 
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-browsers
 
       - name: Install browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install
 
 
       - name: Run tests
