@@ -33,7 +33,7 @@ jobs:
 
       - name: Install browsers
         if: steps.cache-playwright.outputs.cache-hit != 'true'
-        run: npx playwright install
+        run: npx playwright install --with-deps
 
 
       - name: Run tests
