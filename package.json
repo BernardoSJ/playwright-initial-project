@@ -13,7 +13,7 @@
     "report": "playwright show-report reports/html",
     "report:full": "playwright show-report",
     "format": "prettier --write .",
-    "test:report": "playwright test --reporter=html",
+    "test:report": "playwright test",
     "format:check": "prettier --check ."
   }
 }

@@ -1,0 +1,54 @@
+name: Playwright E2E
+
+on:
+  #push:
+  #  branches: [ main ]
+  #pull_request:
+  #  branches: [ main ]
+  workflow_dispatch:
+
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+            node-version: 22
+
+
+      - name: Install deps
+        run: npm ci
+
+
+      - name: Install browsers
+        run: npx playwright install --with-deps
+
+
+      - name: Run tests
+        run: npm run test:report
+
+
+      - name: Upload HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-html-report
+          path: reports/html
+          if-no-files-found: warn
+
+
+      - name: Upload traces & videos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: traces-and-videos
+          path: |
+            test-results/**/trace.zip
+            test-results/**/*.webm
+          if-no-files-found: ignore
