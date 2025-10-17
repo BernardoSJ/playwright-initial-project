@@ -1,26 +1,79 @@
 name: Playwright E2E
 
 on:
-  #push:
-  #  branches: [ main ]
-  #pull_request:
-  #  branches: [ main ]
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
 
 
 jobs:
-  e2e:
+  pr-checkout:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+            node-version: 22
+            cache: 'npm' 
+      
+      - name: Install deps
+        run: npm ci
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-browsers
+
+      - name: Install browsers + system deps
+        if: steps.cache-playwright.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps
+
+      - name: Run Checkout tests (chromium)
+        run: npx playwright test --project=chromium --grep @checkout
+
+      - name: Upload HTML report (checkout)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-checkout-report-chromium
+          path: reports/html
+          if-no-files-found: warn
+
+      - name: Upload traces & videos (checkout)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: traces-and-videos-smoke
+          path: |
+            test-results/**/trace.zip
+            test-results/**/*.webm
+          if-no-files-found: ignore
+
+
+  e2e-matrix:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [chromium, firefox, webkit]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
             node-version: 22
-
+            cache: 'npm'
 
       - name: Install deps
         run: npm ci
@@ -31,25 +84,25 @@ jobs:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-browsers
 
-      - name: Install browsers
+      - name: Install browsers + system deps
         if: steps.cache-playwright.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
 
+      - name: Run tests (${{ matrix.project }})
+        run: |
+          npx playwright test \
+            --project=${{ matrix.project }}
 
-      - name: Run tests
-        run: npm run test:report
-
-
-      - name: Upload HTML report
+      - name: Upload HTML report (${{ matrix.project }})
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-html-report
+          name: playwright-html-report-(${{ matrix.project }})
           path: reports/html
           if-no-files-found: warn
 
 
-      - name: Upload traces & videos
+      - name: Upload traces & videos (${{ matrix.project }})
         if: always()
         uses: actions/upload-artifact@v4
         with:
