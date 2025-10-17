@@ -26,14 +26,18 @@ jobs:
         run: npm ci
 
       - name: Cache Playwright browsers
+        id: cache-playwright
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-browsers
 
-      - name: Install browsers + system deps
+      - name: Install system dependencies
+        run: npx playwright install-deps
+
+      - name: Install browsers (if cache miss)
         if: steps.cache-playwright.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps
+        run: npx playwright install
 
       - name: Run Checkout tests (chromium)
         run: npx playwright test --project=chromium --grep @checkout
@@ -79,19 +83,21 @@ jobs:
         run: npm ci
 
       - name: Cache Playwright browsers
+        id: cache-playwright
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-browsers
 
-      - name: Install browsers + system deps
+      - name: Install system dependencies
+        run: npx playwright install-deps
+
+      - name: Install browsers (if cache miss)
         if: steps.cache-playwright.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps
+        run: npx playwright install
 
       - name: Run tests (${{ matrix.project }})
-        run: |
-          npx playwright test \
-            --project=${{ matrix.project }}
+        run: npx playwright test --project=${{ matrix.project }}
 
       - name: Upload HTML report (${{ matrix.project }})
         if: always()
