@@ -30,14 +30,35 @@ Run the following commands in your terminal:
    ```bash
    npx playwright test --grep @cart
    ```
-6. **Open the most recent test report (after running all tests):**
+6. **Run on a specific browser**
+   ```bash
+   npx playwright test --project=chromium
+   npx playwright test --project=firefox
+   npx playwright test --project=webkit
+   ```
+7. **Open the most recent test report (after running all tests):**
    ```bash
    npm run report:full
    ```
-7. **Open the report for the last single test module run:**
+8. **Open the report for the last single test module run:**
    ```bash
    npm run report
    ```
+
+## ⚙️ GitHub Actions CI
+
+This project includes a **GitHub Actions** workflow to run Playwright tests in CI.
+* Workflow name: **Playwright E2E**.
+* Triggers: 
+   * **workflow_dispatch**.
+   * **push** to main.
+   * **pull_request** to main.
+* **PRs** executes only @checkout faster in chromium.
+* **Push/manual** matrix for browser (**Chromium**, **Firefox**, **WebKit**).
+* **Artifacts**:
+   * **HTML report** reports/html.
+   * On failure after retry: **trace.zip** and **video.webm** (from test-results/**)
+
 
 ## 📊 Test Reports
 
@@ -57,6 +78,8 @@ When tests fail after a retry, Playwright also generates:
 * ```texttrace.zip``` → full trace viewer
 * ```textvideo.webmv``` → video of the failing test
 (both under ```text/texttest-results```)
+
+
 ## ✅ Current Test Coverage
 
 **Implemented modules:**
@@ -66,19 +89,25 @@ When tests fail after a retry, Playwright also generates:
 * **Logout**
 * **Checkout (data-driven)**
 
-
 ## 🧩 Project Structure
 
 ```text
 playwright-initial-project/
   ├── pages/                # Page Object Models for reusability
-  ├── tests/                # End-to-end test specifications
+  ├── tests/                # End-to-end test specifications (Included network mocking with page.route)
   ├── fixtures/             # custom fixtures
-  ├── mocks/                # (Planned) network mocks
   ├── utils/                # Data builder and helpers
   ├── playwright.config.ts  # Playwright configuration file
   ├── package.json          # Dependencies and npm scripts
   └── tsconfig.json         # TypeScript configuration
+```
+
+## 🧪 Network Mocking (page.route)
+This repo includes a didactic example using page.route to intercept and fulfill a JSON response, demonstrating network control without a real backend.
+
+**Run only the mock test:**
+```bash
+npx playwright test --grep @mock
 ```
 
 ## 🧠 Key Concepts Applied
@@ -92,13 +121,14 @@ playwright-initial-project/
 * Enable trace and video recording for debugging purposes.
 * Data driven using Faker.js
 * Zero manual waits applying ```text expect()``` for robust validations, assertions and automatic synchronization.
+* Network mocking with page.route and simulated JSON
 
-## 📌 Future Improvements
+## ⚠️ Limitations And Considerations
 
-Planned enhancements include:
-* Integrate **CI/CD pipelines** with GitHub Actions.
-* Add **network mocks** and **data fixtures** for isolated test scenarios.
-* Enhance reports by attaching trace/video artifacts directly in the CI pipeline.
+* Network mocking does not bypass CORS automatically; behavior may differ from production setups.
+* Service Workers or aggressive caching can prevent requests from reaching the network layer—disable or invalidate cache if needed.
+* page.route intercepts browser-initiated requests (fetch, XHR, assets) only; it doesn’t mock server-side calls executed outside the browser context.
+* Keep mocks scoped to tests/suites to avoid interference in parallel runs.
 
 ## 🧑‍💻 Author
 
